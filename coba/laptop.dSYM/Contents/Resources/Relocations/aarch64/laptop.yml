@@ -1,0 +1,10 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     laptop
+relocations:
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: __Z8drawCubev, symObjAddr: 0x0, symBinAddr: 0x100003BA4, symSize: 0x1AC }
+  - { offsetInCU: 0x2C66, offset: 0x2C66, size: 0x8, addend: 0x0, symName: __Z8drawCubev, symObjAddr: 0x0, symBinAddr: 0x100003BA4, symSize: 0x1AC }
+  - { offsetInCU: 0x2C7F, offset: 0x2C7F, size: 0x8, addend: 0x0, symName: __Z7displayv, symObjAddr: 0x1AC, symBinAddr: 0x100003D50, symSize: 0x60 }
+  - { offsetInCU: 0x2C98, offset: 0x2C98, size: 0x8, addend: 0x0, symName: __Z7reshapeii, symObjAddr: 0x20C, symBinAddr: 0x100003DB0, symSize: 0x74 }
+  - { offsetInCU: 0x2CCE, offset: 0x2CCE, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x280, symBinAddr: 0x100003E24, symSize: 0x78 }
+...

@@ -18,53 +18,60 @@ float elevation = 0;
 char key = -1;
 float vAng = v/r;
 
+float randf() {
+    return static_cast<float>(rand()) / RAND_MAX;
+}
+
+void drawSide(float px, float py, float pz, float sx, float sy, float sz){
+    glBegin(GL_QUADS);    //segiempat depan kamera               
+    glVertex3f(px+sx,py+sy,0); //'kanan atas
+    glVertex3f(px+sx,py-sy,0);//'kanan bawah 
+    glVertex3f(px-sx,py-sy,0); //'kiri bawah 
+    glVertex3f(px-sx,py+sy,0); //'kiri atas
+    glEnd();
+}
+
 void drawCube(float px, float py, float pz, float sx, float sy, float sz) {
     float sx2 = sx/2;
     float sy2 = sy/2;
     float sz2 = sz/2;
     glBegin(GL_QUADS);
-    // Depan
-    glColor3f(0.8f, 0.2f, 0.1f); // Merah kecoklatan
-    glVertex3f(px + sx2, py + sy2, pz + sz2); // 'kanan atas
-    glVertex3f(px + sx2, py - sy2, pz + sz2); // 'kanan bawah
-    glVertex3f(px - sx2, py - sy2, pz + sz2); // 'kiri bawah
-    glVertex3f(px - sx2, py + sy2, pz + sz2); // 'kiri atas
-
-    // Belakang
-    glColor3f(0.2f, 0.8f, 0.1f); // Hijau kecoklatan
-    glVertex3f(px + sx2, py + sy2, pz - sz2); // 'kanan atas
-    glVertex3f(px + sx2, py - sy2, pz - sz2); // 'kanan bawah
-    glVertex3f(px - sx2, py - sy2, pz - sz2); // 'kiri bawah
-    glVertex3f(px - sx2, py + sy2, pz - sz2); // 'kiri atas
-
-    // Kiri
-    glColor3f(0.1f, 0.2f, 0.8f); // Biru kecoklatan
-    glVertex3f(px - sx2, py + sy2, pz + sz2); // 'kanan atas
-    glVertex3f(px - sx2, py - sy2, pz + sz2); // 'kanan bawah
-    glVertex3f(px - sx2, py - sy2, pz - sz2); // 'kiri bawah
-    glVertex3f(px - sx2, py + sy2, pz - sz2); // 'kiri atas
-
-    // Kanan
-    glColor3f(0.8f, 0.8f, 0.2f); // Kuning kecoklatan
-    glVertex3f(px + sx2, py + sy2, pz + sz2); // 'kanan atas
-    glVertex3f(px + sx2, py - sy2, pz + sz2); // 'kanan bawah
-    glVertex3f(px + sx2, py - sy2, pz - sz2); // 'kiri bawah
-    glVertex3f(px + sx2, py + sy2, pz - sz2); // 'kiri atas
-
-    // Atas
-    glColor3f(0.2f, 0.8f, 0.8f); // Cyan kecoklatan
-    glVertex3f(px + sx2, py + sy2, pz + sz2); // 'kanan atas
-    glVertex3f(px - sx2, py + sy2, pz + sz2); // 'kanan bawah
-    glVertex3f(px - sx2, py + sy2, pz - sz2); // 'kiri bawah
-    glVertex3f(px + sx2, py + sy2, pz - sz2); // 'kiri atas
-
-    // Bawah
-    glColor3f(0.8f, 0.2f, 0.8f); // Magenta kecoklatan
-    glVertex3f(px + sx2, py - sy2, pz + sz2); // 'kanan atas
-    glVertex3f(px - sx2, py - sy2, pz + sz2); // 'kanan bawah
-    glVertex3f(px - sx2, py - sy2, pz - sz2); // 'kiri bawah
-    glVertex3f(px + sx2, py - sy2, pz - sz2); // 'kiri atas
-
+    // //  depan
+    glColor3f(randf(),randf(),randf());
+    glVertex3f(px+sx2,py+sy2,pz+sz2); //'kanan atas
+    glVertex3f(px+sx2,py-sy2,pz+sz2);//'kanan bawah 
+    glVertex3f(px-sx2,py-sy2,pz+sz2); //'kiri bawah 
+    glVertex3f(px-sx2,py+sy2,pz+sz2); //'kiri atas
+    // belakang
+    glColor3f(randf(),randf(),randf());
+    glVertex3f(px+sx2,py+sy2,pz-sz2); //'kanan atas
+    glVertex3f(px+sx2,py-sy2,pz-sz2);//'kanan bawah 
+    glVertex3f(px-sx2,py-sy2,pz-sz2); //'kiri bawah 
+    glVertex3f(px-sx2,py+sy2,pz-sz2); //'kiri atas
+    // kiri
+    glColor3f(randf(),randf(),randf());
+    glVertex3f(px-sx2,py+sy2,pz+sz2); //'kanan atas
+    glVertex3f(px-sx2,py-sy2,pz+sz2);//'kanan bawah 
+    glVertex3f(px-sx2,py-sy2,pz-sz2); //'kiri bawah 
+    glVertex3f(px-sx2,py+sy2,pz-sz2); //'kiri atas
+    // kanan
+    glColor3f(randf(),randf(),randf());
+    glVertex3f(px+sx2,py+sy2,pz+sz2); //'kanan atas
+    glVertex3f(px+sx2,py-sy2,pz+sz2);//'kanan bawah 
+    glVertex3f(px+sx2,py-sy2,pz-sz2); //'kiri bawah 
+    glVertex3f(px+sx2,py+sy2,pz-sz2); //'kiri atas
+    // atas
+    glColor3f(randf(),randf(),randf());
+    glVertex3f(px+sx2,py+sy2,pz+sz2); //'kanan atas
+    glVertex3f(px-sx2,py+sy2,pz+sz2);//'kanan bawah 
+    glVertex3f(px-sx2,py+sy2,pz-sz2); //'kiri bawah 
+    glVertex3f(px+sx2,py+sy2,pz-sz2); //'kiri atas
+    // bawah
+    glColor3f(randf(),randf(),randf());
+    glVertex3f(px+sx2,py-sy2,pz+sz2); //'kanan atas
+    glVertex3f(px-sx2,py-sy2,pz+sz2);//'kanan bawah 
+    glVertex3f(px-sx2,py-sy2,pz-sz2); //'kiri bawah 
+    glVertex3f(px+sx2,py-sy2,pz-sz2); //'kiri atas
     glEnd();
 }
 
@@ -149,7 +156,7 @@ void update(int value) {
     console();
     glutPostRedisplay();
     
-    glutTimerFunc(50, update, 0); // Call update function every 16 milliseconds (about 60 frames per second)
+    glutTimerFunc(16, update, 0); // Call update function every 16 milliseconds (about 60 frames per second)
 }
 
 void specialCallback(int _key, int x, int y) {

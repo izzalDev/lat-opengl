@@ -77,7 +77,11 @@ void display() {
     gluLookAt(camX, camY, camZ,  // eye position
               0.0, 0.0, 0.0,      // look-at position
               0.0, 1.0, 0.0);     // up vector    // mulai menggambar
-    drawCube(0,0,0,1,1,1);
+    drawCube(0, 0.275, 0, 1.2, 0.05, 0.8);
+    drawCube(-0.55, -0.025, 0.35, 0.1, 0.55, 0.1); //kaki depan kiri
+    drawCube(0.55, -0.025, 0.35, 0.1, 0.55, 0.1); //kaki depan kanan
+    drawCube(-0.55, -0.025, -0.35, 0.1, 0.55, 0.1); //kaki belakang kiri
+    drawCube(0.55, -0.025, -0.35, 0.1, 0.55, 0.1); //kaki belakang kanan
 
     // selesai menggambar
     glutSwapBuffers();
@@ -114,11 +118,11 @@ void console(){
 void update(int value) {
     // Meminta agar tampilan diupdate
     switch (key){
-        case 100: azimuth = fmod(azimuth+vAng,RAD_E);
+        case 100: azimuth = fmod(azimuth-vAng,RAD_E);
             break;
         case 101: elevation = fmod(elevation+vAng,RAD_E);
             break;
-        case 102: azimuth = fmod(azimuth-vAng,RAD_E);
+        case 102: azimuth = fmod(azimuth+vAng,RAD_E);
             break;
         case 103: elevation = fmod(elevation-vAng,RAD_E);
             break;

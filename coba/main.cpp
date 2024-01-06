@@ -11,7 +11,7 @@
 using namespace std;
 
 const float RAD_E = 2*M_PI;
-float v= 0.1;
+float v= 0.2;
 float r = 5.0;
 float azimuth = -90*M_PI_2;
 float elevation = 0;
@@ -97,6 +97,7 @@ void debug_console(float value){
     cout << "Elevation :" << azimuth << endl;
     cout << "Key       :" << key << endl;
 }
+
 void update(int value) {
     // Meminta agar tampilan diupdate
     switch (key){
@@ -106,11 +107,23 @@ void update(int value) {
             break;
         case 102: azimuth = fmod(azimuth-vAng,RAD_E);
             break;
-        case 103: elevation = fmod(elevation-vAng,RAD_E);;
+        case 103: elevation = fmod(elevation-vAng,RAD_E);
             break;
         case 61: r -= v;
             break;
         case 45: r += v;
+            break;
+        case '.':
+            v += 0.001;
+            vAng = v/r;
+            break;
+        case ',':
+            if (v>0){
+                v -= 0.001;
+            } else {
+                v = 0;
+            }
+            vAng = v/r;
             break;
     }
     glutPostRedisplay();

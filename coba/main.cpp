@@ -18,50 +18,53 @@ float elevation = 0;
 char key = -1;
 float vAng = v/r;
 
-void drawSide(float px, float py, float pz, float sx, float sy, float sz){
-    glBegin(GL_QUADS);    //segiempat depan kamera               
-    glVertex3f(px+sx,py+sy,0); //'kanan atas
-    glVertex3f(px+sx,py-sy,0);//'kanan bawah 
-    glVertex3f(px-sx,py-sy,0); //'kiri bawah 
-    glVertex3f(px-sx,py+sy,0); //'kiri atas
-    glEnd();
-}
-
 void drawCube(float px, float py, float pz, float sx, float sy, float sz) {
     float sx2 = sx/2;
     float sy2 = sy/2;
     float sz2 = sz/2;
     glBegin(GL_QUADS);
-    // //  depan
-    glVertex3f(px+sx2,py+sy2,pz+sz2); //'kanan atas
-    glVertex3f(px+sx2,py-sy2,pz+sz2);//'kanan bawah 
-    glVertex3f(px-sx2,py-sy2,pz+sz2); //'kiri bawah 
-    glVertex3f(px-sx2,py+sy2,pz+sz2); //'kiri atas
-    // belakang
-    glVertex3f(px+sx2,py+sy2,pz-sz2); //'kanan atas
-    glVertex3f(px+sx2,py-sy2,pz-sz2);//'kanan bawah 
-    glVertex3f(px-sx2,py-sy2,pz-sz2); //'kiri bawah 
-    glVertex3f(px-sx2,py+sy2,pz-sz2); //'kiri atas
-    // kiri
-    glVertex3f(px-sx2,py+sy2,pz+sz2); //'kanan atas
-    glVertex3f(px-sx2,py-sy2,pz+sz2);//'kanan bawah 
-    glVertex3f(px-sx2,py-sy2,pz-sz2); //'kiri bawah 
-    glVertex3f(px-sx2,py+sy2,pz-sz2); //'kiri atas
-    // kanan
-    glVertex3f(px+sx2,py+sy2,pz+sz2); //'kanan atas
-    glVertex3f(px+sx2,py-sy2,pz+sz2);//'kanan bawah 
-    glVertex3f(px+sx2,py-sy2,pz-sz2); //'kiri bawah 
-    glVertex3f(px+sx2,py+sy2,pz-sz2); //'kiri atas
-    // atas
-    glVertex3f(px+sx2,py+sy2,pz+sz2); //'kanan atas
-    glVertex3f(px-sx2,py+sy2,pz+sz2);//'kanan bawah 
-    glVertex3f(px-sx2,py+sy2,pz-sz2); //'kiri bawah 
-    glVertex3f(px+sx2,py+sy2,pz-sz2); //'kiri atas
-    // bawah
-    glVertex3f(px+sx2,py-sy2,pz+sz2); //'kanan atas
-    glVertex3f(px-sx2,py-sy2,pz+sz2);//'kanan bawah 
-    glVertex3f(px-sx2,py-sy2,pz-sz2); //'kiri bawah 
-    glVertex3f(px+sx2,py-sy2,pz-sz2); //'kiri atas
+    // Depan
+    glColor3f(0.8f, 0.2f, 0.1f); // Merah kecoklatan
+    glVertex3f(px + sx2, py + sy2, pz + sz2); // 'kanan atas
+    glVertex3f(px + sx2, py - sy2, pz + sz2); // 'kanan bawah
+    glVertex3f(px - sx2, py - sy2, pz + sz2); // 'kiri bawah
+    glVertex3f(px - sx2, py + sy2, pz + sz2); // 'kiri atas
+
+    // Belakang
+    glColor3f(0.2f, 0.8f, 0.1f); // Hijau kecoklatan
+    glVertex3f(px + sx2, py + sy2, pz - sz2); // 'kanan atas
+    glVertex3f(px + sx2, py - sy2, pz - sz2); // 'kanan bawah
+    glVertex3f(px - sx2, py - sy2, pz - sz2); // 'kiri bawah
+    glVertex3f(px - sx2, py + sy2, pz - sz2); // 'kiri atas
+
+    // Kiri
+    glColor3f(0.1f, 0.2f, 0.8f); // Biru kecoklatan
+    glVertex3f(px - sx2, py + sy2, pz + sz2); // 'kanan atas
+    glVertex3f(px - sx2, py - sy2, pz + sz2); // 'kanan bawah
+    glVertex3f(px - sx2, py - sy2, pz - sz2); // 'kiri bawah
+    glVertex3f(px - sx2, py + sy2, pz - sz2); // 'kiri atas
+
+    // Kanan
+    glColor3f(0.8f, 0.8f, 0.2f); // Kuning kecoklatan
+    glVertex3f(px + sx2, py + sy2, pz + sz2); // 'kanan atas
+    glVertex3f(px + sx2, py - sy2, pz + sz2); // 'kanan bawah
+    glVertex3f(px + sx2, py - sy2, pz - sz2); // 'kiri bawah
+    glVertex3f(px + sx2, py + sy2, pz - sz2); // 'kiri atas
+
+    // Atas
+    glColor3f(0.2f, 0.8f, 0.8f); // Cyan kecoklatan
+    glVertex3f(px + sx2, py + sy2, pz + sz2); // 'kanan atas
+    glVertex3f(px - sx2, py + sy2, pz + sz2); // 'kanan bawah
+    glVertex3f(px - sx2, py + sy2, pz - sz2); // 'kiri bawah
+    glVertex3f(px + sx2, py + sy2, pz - sz2); // 'kiri atas
+
+    // Bawah
+    glColor3f(0.8f, 0.2f, 0.8f); // Magenta kecoklatan
+    glVertex3f(px + sx2, py - sy2, pz + sz2); // 'kanan atas
+    glVertex3f(px - sx2, py - sy2, pz + sz2); // 'kanan bawah
+    glVertex3f(px - sx2, py - sy2, pz - sz2); // 'kiri bawah
+    glVertex3f(px + sx2, py - sy2, pz - sz2); // 'kiri atas
+
     glEnd();
 }
 
@@ -111,7 +114,7 @@ void console(){
         }
         cout << "Speed     :" << v << endl;
         cout << "Azimuth   :" << azimuth << endl;
-        cout << "Elevation :" << azimuth << endl;
+        cout << "Elevation :" << elevation << endl;
     }
 }
 
@@ -146,7 +149,7 @@ void update(int value) {
     console();
     glutPostRedisplay();
     
-    glutTimerFunc(16, update, 0); // Call update function every 16 milliseconds (about 60 frames per second)
+    glutTimerFunc(50, update, 0); // Call update function every 16 milliseconds (about 60 frames per second)
 }
 
 void specialCallback(int _key, int x, int y) {
@@ -181,6 +184,7 @@ int main(int argc, char** argv) {
     glutKeyboardUpFunc(keyUpCallback);
     glutReshapeFunc(reshape);
     glutDisplayFunc(display);
+    glEnable(GL_DEPTH_TEST);
     update(0);
     glutMainLoop();
     return 0;

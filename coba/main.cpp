@@ -5,8 +5,18 @@
 #include <GL/glut.h>
 #endif
 #include <iostream>
+#include <tgmath.h>
+#include <stdlib.h>  
 
 using namespace std;
+
+const float RAD_E = 2*M_PI;
+float v= 0.1;
+float r = 5.0;
+float azimuth = -90*M_PI_2;
+float elevation = 0;
+char key = 0;
+float vAng = v/r;
 
 void drawCube() {
     // Menggambar kotak
@@ -45,20 +55,20 @@ void drawCube() {
 }
 
 void display() {
-    // Membersihkan buffer warna dan depth
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    // Memilih matriks modelview dan mengatur ulang
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+    float camX = r * cos(elevation) * cos(azimuth);
+    float camZ = r * cos(elevation) * sin(azimuth);
+    float camY = r * sin(elevation);
 
-    // Mengatur posisi dan orientasi kamera menggunakan gluLookAt
-    gluLookAt(0.0, 0.0, 5.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
-
-    // Gambar kotak
+    gluLookAt(camX, camY, camZ,  // eye position
+              0.0, 0.0, 0.0,      // look-at position
+              0.0, 1.0, 0.0);     // up vector    // mulai menggambar
     drawCube();
 
-    // Menukar buffer dalam double buffering
+    // selesai menggambar
     glutSwapBuffers();
 }
 
@@ -71,28 +81,80 @@ void reshape(int width, int height) {
     glLoadIdentity();
 
     // Mengatur perspektif pandangan
+    // gluOrtho2D(-2.5, 10, -1.0, 1.0);
     gluPerspective(45.0, (float)width / (float)height, 0.1, 100.0);
 }
 
-int main(int argc, char** argv) {
-    // Inisialisasi GLUT
-    glutInit(&argc, argv);
 
-    // Mengatur mode tampilan
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
-
-    // Membuat jendela
-    glutCreateWindow("Kotak dan Kamera dengan gluLookAt");
-
-    // Menetapkan fungsi-fungsi callback
-    glutDisplayFunc(display);
-    glutReshapeFunc(reshape);
-
-    // Mengaktifkan uji kedalaman (depth test)
-    glEnable(GL_DEPTH_TEST);
-
-    // Memulai loop utama GLUT
-    glutMainLoop();
+void debug_console(float value){
+    if(__APPLE__){
+        system("clear");
+    } else {
+        system("cls"); 
+    }
+    cout << "Speed     :" << v << endl;
+    cout << "Azimuth   :" << azimuth << endl;
+    cout << "Elevation :" << azimuth << endl;
+    cout << "Key       :" << key << endl;
+}
+void update(int value) {
+    // Meminta agar tampilan diupdate
+    switch (key){
+        case 100: azimuth = fmod(azimuth+vAng,RAD_E);
+            break;
+        case 101: elevation = fmod(elevation+vAng,RAD_E);
+            break;
+        case 102: azimuth = fmod(azimuth-vAng,RAD_E);
+            break;
+        case 103: elevation = fmod(elevation-vAng,RAD_E);;
+            break;
+        case 61: r -= v;
+            break;
+        case 45: r += v;
+            break;
+    }
+    glutPostRedisplay();
     
+    glutTimerFunc(16, update, 0); // Call update function every 16 milliseconds (about 60 frames per second)
+}
+
+void specialCallback(int _key, int x, int y) {
+    key = (unsigned char)_key;
+    debug_console(0);
+}
+
+void keyCallback(unsigned char _key, int x, int y) {
+    key = _key;
+    debug_console(0);
+}
+
+void specialUpCallback(int _key, int x, int y) {
+    switch (_key){
+        default:
+            key = 0;
+    }
+    debug_console(0);
+}
+
+void keyUpCallback(unsigned char _key, int x, int y) {
+    switch (_key){
+        default:
+            key = 0;
+    }
+    debug_console(0);
+}
+
+int main(int argc, char** argv) {
+    glutInit(&argc, argv);
+    glutInitDisplayMode(GLUT_RGB | GLUT_DEPTH);
+    glutCreateWindow("TA Makul Komputer Grafik");
+    glutSpecialFunc(specialCallback);
+    glutSpecialUpFunc(specialUpCallback);
+    glutKeyboardFunc(keyCallback);
+    glutKeyboardUpFunc(keyUpCallback);
+    glutReshapeFunc(reshape);
+    glutDisplayFunc(display);
+    update(0);
+    glutMainLoop();
     return 0;
 }

@@ -13,45 +13,55 @@ using namespace std;
 const float RAD_E = 2*M_PI;
 float v= 0.2;
 float r = 5.0;
-float azimuth = -90*M_PI_2;
+float azimuth = -90*(M_PI / 180);
 float elevation = 0;
 char key = -1;
 float vAng = v/r;
 
 void drawCube() {
+    glBegin(GL_QUADS);    //segiempat depan kamera    
+    glColor3f(1,0,0);             
+    glVertex3f(1,1,-1); //'kanan atas
+    glColor3f(0,1,0);
+    glVertex3f(1,-1,-1);//'kanan bawah 
+    glColor3f(0,0,1);
+    glVertex3f(-1,-1,-1); //'kiri bawah 
+    glColor3f(1,1,0);
+    glVertex3f(-1,1,-1); //'kiri atas
+    glEnd();     
     // Menggambar kotak
-    glBegin(GL_QUADS);
+    // glBegin(GL_QUADS);
     // Sisi depan
-    glVertex3f(-1.0, -1.0, 1.0);
-    glVertex3f(1.0, -1.0, 1.0);
-    glVertex3f(1.0, 1.0, 1.0);
-    glVertex3f(-1.0, 1.0, 1.0);
-    // Sisi belakang
-    glVertex3f(-1.0, -1.0, -1.0);
-    glVertex3f(1.0, -1.0, -1.0);
-    glVertex3f(1.0, 1.0, -1.0);
-    glVertex3f(-1.0, 1.0, -1.0);
-    // Sisi kanan
-    glVertex3f(1.0, -1.0, 1.0);
-    glVertex3f(1.0, -1.0, -1.0);
-    glVertex3f(1.0, 1.0, -1.0);
-    glVertex3f(1.0, 1.0, 1.0);
-    // Sisi kiri
-    glVertex3f(-1.0, -1.0, 1.0);
-    glVertex3f(-1.0, -1.0, -1.0);
-    glVertex3f(-1.0, 1.0, -1.0);
-    glVertex3f(-1.0, 1.0, 1.0);
-    // Sisi atas
-    glVertex3f(-1.0, 1.0, 1.0);
-    glVertex3f(1.0, 1.0, 1.0);
-    glVertex3f(1.0, 1.0, -1.0);
-    glVertex3f(-1.0, 1.0, -1.0);
-    // Sisi bawah
-    glVertex3f(-1.0, -1.0, 1.0);
-    glVertex3f(1.0, -1.0, 1.0);
-    glVertex3f(1.0, -1.0, -1.0);
-    glVertex3f(-1.0, -1.0, -1.0);
-    glEnd();
+    // glVertex3f(-1.0, -1.0, 1.0);
+    // glVertex3f(1.0, -1.0, 1.0);
+    // glVertex3f(1.0, 1.0, 1.0);
+    // glVertex3f(-1.0, 1.0, 1.0);
+    // // Sisi belakang
+    // glVertex3f(-1.0, -1.0, -1.0);
+    // glVertex3f(1.0, -1.0, -1.0);
+    // glVertex3f(1.0, 1.0, -1.0);
+    // glVertex3f(-1.0, 1.0, -1.0);
+    // // Sisi kanan
+    // glVertex3f(1.0, -1.0, 1.0);
+    // glVertex3f(1.0, -1.0, -1.0);
+    // glVertex3f(1.0, 1.0, -1.0);
+    // glVertex3f(1.0, 1.0, 1.0);
+    // // Sisi kiri
+    // glVertex3f(-1.0, -1.0, 1.0);
+    // glVertex3f(-1.0, -1.0, -1.0);
+    // glVertex3f(-1.0, 1.0, -1.0);
+    // glVertex3f(-1.0, 1.0, 1.0);
+    // // Sisi atas
+    // glVertex3f(-1.0, 1.0, 1.0);
+    // glVertex3f(1.0, 1.0, 1.0);
+    // glVertex3f(1.0, 1.0, -1.0);
+    // glVertex3f(-1.0, 1.0, -1.0);
+    // // Sisi bawah
+    // glVertex3f(-1.0, -1.0, 1.0);
+    // glVertex3f(1.0, -1.0, 1.0);
+    // glVertex3f(1.0, -1.0, -1.0);
+    // glVertex3f(-1.0, -1.0, -1.0);
+    // glEnd();
 }
 
 void display() {
@@ -128,7 +138,7 @@ void update(int value) {
             vAng = v/r;
             break;
     }
-    console();
+    // console();
     glutPostRedisplay();
     
     glutTimerFunc(16, update, 0); // Call update function every 16 milliseconds (about 60 frames per second)

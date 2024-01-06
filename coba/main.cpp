@@ -13,55 +13,56 @@ using namespace std;
 const float RAD_E = 2*M_PI;
 float v= 0.2;
 float r = 5.0;
-float azimuth = -90*(M_PI / 180);
+float azimuth = 0;
 float elevation = 0;
 char key = -1;
 float vAng = v/r;
 
-void drawCube() {
-    glBegin(GL_QUADS);    //segiempat depan kamera    
-    glColor3f(1,0,0);             
-    glVertex3f(1,1,-1); //'kanan atas
-    glColor3f(0,1,0);
-    glVertex3f(1,-1,-1);//'kanan bawah 
-    glColor3f(0,0,1);
-    glVertex3f(-1,-1,-1); //'kiri bawah 
-    glColor3f(1,1,0);
-    glVertex3f(-1,1,-1); //'kiri atas
-    glEnd();     
-    // Menggambar kotak
-    // glBegin(GL_QUADS);
-    // Sisi depan
-    // glVertex3f(-1.0, -1.0, 1.0);
-    // glVertex3f(1.0, -1.0, 1.0);
-    // glVertex3f(1.0, 1.0, 1.0);
-    // glVertex3f(-1.0, 1.0, 1.0);
-    // // Sisi belakang
-    // glVertex3f(-1.0, -1.0, -1.0);
-    // glVertex3f(1.0, -1.0, -1.0);
-    // glVertex3f(1.0, 1.0, -1.0);
-    // glVertex3f(-1.0, 1.0, -1.0);
-    // // Sisi kanan
-    // glVertex3f(1.0, -1.0, 1.0);
-    // glVertex3f(1.0, -1.0, -1.0);
-    // glVertex3f(1.0, 1.0, -1.0);
-    // glVertex3f(1.0, 1.0, 1.0);
-    // // Sisi kiri
-    // glVertex3f(-1.0, -1.0, 1.0);
-    // glVertex3f(-1.0, -1.0, -1.0);
-    // glVertex3f(-1.0, 1.0, -1.0);
-    // glVertex3f(-1.0, 1.0, 1.0);
-    // // Sisi atas
-    // glVertex3f(-1.0, 1.0, 1.0);
-    // glVertex3f(1.0, 1.0, 1.0);
-    // glVertex3f(1.0, 1.0, -1.0);
-    // glVertex3f(-1.0, 1.0, -1.0);
-    // // Sisi bawah
-    // glVertex3f(-1.0, -1.0, 1.0);
-    // glVertex3f(1.0, -1.0, 1.0);
-    // glVertex3f(1.0, -1.0, -1.0);
-    // glVertex3f(-1.0, -1.0, -1.0);
-    // glEnd();
+void drawSide(float px, float py, float pz, float sx, float sy, float sz){
+    glBegin(GL_QUADS);    //segiempat depan kamera               
+    glVertex3f(px+sx,py+sy,0); //'kanan atas
+    glVertex3f(px+sx,py-sy,0);//'kanan bawah 
+    glVertex3f(px-sx,py-sy,0); //'kiri bawah 
+    glVertex3f(px-sx,py+sy,0); //'kiri atas
+    glEnd();
+}
+
+void drawCube(float px, float py, float pz, float sx, float sy, float sz) {
+    float sx2 = sx/2;
+    float sy2 = sy/2;
+    float sz2 = sz/2;
+    glBegin(GL_QUADS);
+    // //  depan
+    glVertex3f(px+sx2,py+sy2,pz+sz2); //'kanan atas
+    glVertex3f(px+sx2,py-sy2,pz+sz2);//'kanan bawah 
+    glVertex3f(px-sx2,py-sy2,pz+sz2); //'kiri bawah 
+    glVertex3f(px-sx2,py+sy2,pz+sz2); //'kiri atas
+    // belakang
+    glVertex3f(px+sx2,py+sy2,pz-sz2); //'kanan atas
+    glVertex3f(px+sx2,py-sy2,pz-sz2);//'kanan bawah 
+    glVertex3f(px-sx2,py-sy2,pz-sz2); //'kiri bawah 
+    glVertex3f(px-sx2,py+sy2,pz-sz2); //'kiri atas
+    // kiri
+    glVertex3f(px-sx2,py+sy2,pz+sz2); //'kanan atas
+    glVertex3f(px-sx2,py-sy2,pz+sz2);//'kanan bawah 
+    glVertex3f(px-sx2,py-sy2,pz-sz2); //'kiri bawah 
+    glVertex3f(px-sx2,py+sy2,pz-sz2); //'kiri atas
+    // kanan
+    glVertex3f(px+sx2,py+sy2,pz+sz2); //'kanan atas
+    glVertex3f(px+sx2,py-sy2,pz+sz2);//'kanan bawah 
+    glVertex3f(px+sx2,py-sy2,pz-sz2); //'kiri bawah 
+    glVertex3f(px+sx2,py+sy2,pz-sz2); //'kiri atas
+    // atas
+    glVertex3f(px+sx2,py+sy2,pz+sz2); //'kanan atas
+    glVertex3f(px-sx2,py+sy2,pz+sz2);//'kanan bawah 
+    glVertex3f(px-sx2,py+sy2,pz-sz2); //'kiri bawah 
+    glVertex3f(px+sx2,py+sy2,pz-sz2); //'kiri atas
+    // bawah
+    glVertex3f(px+sx2,py-sy2,pz+sz2); //'kanan atas
+    glVertex3f(px-sx2,py-sy2,pz+sz2);//'kanan bawah 
+    glVertex3f(px-sx2,py-sy2,pz-sz2); //'kiri bawah 
+    glVertex3f(px+sx2,py-sy2,pz-sz2); //'kiri atas
+    glEnd();
 }
 
 void display() {
@@ -69,14 +70,14 @@ void display() {
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
-    float camX = r * cos(elevation) * cos(azimuth);
-    float camZ = r * cos(elevation) * sin(azimuth);
+    float camX = r * cos(elevation) * sin(azimuth);
     float camY = r * sin(elevation);
+    float camZ = r * cos(elevation) * cos(azimuth);
 
     gluLookAt(camX, camY, camZ,  // eye position
               0.0, 0.0, 0.0,      // look-at position
               0.0, 1.0, 0.0);     // up vector    // mulai menggambar
-    drawCube();
+    drawCube(0,0,0,1,1,1);
 
     // selesai menggambar
     glutSwapBuffers();
@@ -138,7 +139,7 @@ void update(int value) {
             vAng = v/r;
             break;
     }
-    // console();
+    console();
     glutPostRedisplay();
     
     glutTimerFunc(16, update, 0); // Call update function every 16 milliseconds (about 60 frames per second)

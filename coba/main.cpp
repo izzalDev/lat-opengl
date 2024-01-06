@@ -15,7 +15,7 @@ float v= 0.2;
 float r = 5.0;
 float azimuth = -90*M_PI_2;
 float elevation = 0;
-char key = 0;
+char key = -1;
 float vAng = v/r;
 
 void drawCube() {
@@ -86,16 +86,18 @@ void reshape(int width, int height) {
 }
 
 
-void debug_console(float value){
-    if(__APPLE__){
-        system("clear");
-    } else {
-        system("cls"); 
+void console(){
+    if (key!=0)
+    {
+        if(__APPLE__){
+            system("clear");
+        } else {
+            system("cls"); 
+        }
+        cout << "Speed     :" << v << endl;
+        cout << "Azimuth   :" << azimuth << endl;
+        cout << "Elevation :" << azimuth << endl;
     }
-    cout << "Speed     :" << v << endl;
-    cout << "Azimuth   :" << azimuth << endl;
-    cout << "Elevation :" << azimuth << endl;
-    cout << "Key       :" << key << endl;
 }
 
 void update(int value) {
@@ -126,6 +128,7 @@ void update(int value) {
             vAng = v/r;
             break;
     }
+    console();
     glutPostRedisplay();
     
     glutTimerFunc(16, update, 0); // Call update function every 16 milliseconds (about 60 frames per second)
@@ -133,12 +136,10 @@ void update(int value) {
 
 void specialCallback(int _key, int x, int y) {
     key = (unsigned char)_key;
-    debug_console(0);
 }
 
 void keyCallback(unsigned char _key, int x, int y) {
     key = _key;
-    debug_console(0);
 }
 
 void specialUpCallback(int _key, int x, int y) {
@@ -146,7 +147,6 @@ void specialUpCallback(int _key, int x, int y) {
         default:
             key = 0;
     }
-    debug_console(0);
 }
 
 void keyUpCallback(unsigned char _key, int x, int y) {
@@ -154,7 +154,6 @@ void keyUpCallback(unsigned char _key, int x, int y) {
         default:
             key = 0;
     }
-    debug_console(0);
 }
 
 int main(int argc, char** argv) {

@@ -22,7 +22,7 @@ void drawCube(float px, float py, float pz, float sx, float sy, float sz) {
     float sx2 = sx/2;
     float sy2 = sy/2;
     float sz2 = sz/2;
-    glBegin(GL_QUADS);
+    glBegin(GL_QUADS);///
     // Depan
     glColor3f(0.8f, 0.2f, 0.1f); // Merah kecoklatan
     glVertex3f(px + sx2, py + sy2, pz + sz2); // 'kanan atas
@@ -149,7 +149,7 @@ void update(int value) {
     console();
     glutPostRedisplay();
     
-    glutTimerFunc(50, update, 0); // Call update function every 16 milliseconds (about 60 frames per second)
+    glutTimerFunc(16, update, 0);
 }
 
 void specialCallback(int _key, int x, int y) {
